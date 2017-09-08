@@ -62,8 +62,10 @@ class Webpack(object):
                     self.assets_url = app.config['WEBPACK_ASSETS_URL']
                 else:
                     self.assets_url = stats['publicPath']
+                # Doesn't assets key
+                # self.assets = stats['assets']
+                self.assets = stats
 
-                self.assets = stats['assets']
         except IOError:
             raise RuntimeError(
                 "Flask-Webpack requires 'WEBPACK_MANIFEST_PATH' to be set and "
@@ -88,7 +90,9 @@ class Webpack(object):
         tags = []
 
         for arg in args:
-            asset_path = self.asset_url_for('{0}.js'.format(arg))
+            # Doesn't need .js suffix
+            # asset_path = self.asset_url_for('{0}.js'.format(arg))
+            asset_path = self.asset_url_for('{0}'.format(arg))
             if asset_path:
                 tags.append('<script src="{0}"></script>'.format(asset_path))
 
@@ -104,7 +108,9 @@ class Webpack(object):
         tags = []
 
         for arg in args:
-            asset_path = self.asset_url_for('{0}.css'.format(arg))
+            # Doesn't need .css suffix
+            # asset_path = self.asset_url_for('{0}.css'.format(arg))
+            asset_path = self.asset_url_for('{0}'.format(arg))
             if asset_path:
                 tags.append(
                     '<link rel="stylesheet" href="{0}">'.format(asset_path))
